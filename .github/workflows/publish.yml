@@ -15,10 +15,12 @@ on:
 
 permissions:
   contents: write
+  id-token: write
 
 jobs:
   publish:
     runs-on: ubuntu-latest
+    environment: production
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -62,7 +64,5 @@ jobs:
           git push --follow-tags
 
       - name: Publish to npm (@vdms-vida)
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: |
-          npm publish --access public
+          npm publish --access public --provenance
