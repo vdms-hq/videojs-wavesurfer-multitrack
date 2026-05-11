@@ -64,4 +64,4 @@ jobs:
 
       - name: Publish to npm (@vdms-vida)
         run: |
-          npm publish --access public --provenance
+          npm publish --access public
