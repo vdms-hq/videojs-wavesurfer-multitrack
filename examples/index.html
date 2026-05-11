@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>videojs-wavesurfer-multitrack — Example</title>
+
+    <!-- video.js -->
+    <link href="https://unpkg.com/video.js/dist/video-js.css" rel="stylesheet" />
+    <script src="https://unpkg.com/video.js/dist/video.js"></script>
+
+    <!-- wavesurfer.js v7 -->
+    <script src="https://unpkg.com/wavesurfer.js@7/dist/wavesurfer.min.js"></script>
+
+    <!-- videojs-wavesurfer-multitrack (built) -->
+    <link href="../dist/css/videojs.wavesurfer.multitrack.css" rel="stylesheet" />
+    <script src="../dist/videojs.wavesurfer.multitrack.js"></script>
+
+    <style>
+        body {
+            background: #1a1a2e;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            font-family: sans-serif;
+            color: #eee;
+        }
+        h1 { margin-bottom: 24px; }
+        #my-player {
+            width: 900px;
+        }
+        .controls {
+            margin-top: 16px;
+            display: flex;
+            gap: 12px;
+        }
+        button {
+            padding: 8px 16px;
+            background: #3573FF;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        button:hover { background: #235ee0; }
+    </style>
+</head>
+<body>
+    <h1>videojs-wavesurfer-multitrack</h1>
+
+    <video id="my-player" class="video-js vjs-default-skin" controls preload="auto">
+        <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4" />
+    </video>
+
+    <div class="controls">
+        <button id="btn-load-tracks">Load tracks (same)</button>
+        <button id="btn-swap-tracks">Swap tracks (empty)</button>
+        <button id="btn-track1">Show Track1</button>
+        <button id="btn-track2">Show Track2</button>
+        <button id="btn-all-tracks">Show all tracks</button>
+    </div>
+
+    <script>
+        // ---------------------------------------------------------------------------
+        // Example waveform-json track list (replace URLs with real ones from your BE)
+        // Each entry has:   type, url, details: { track, channel }
+        // track and channel are numbers, e.g. 1, 2
+        // ---------------------------------------------------------------------------
+        const TRACKS_A = [
+            // Dummy example — replace with real audiowaveform JSON URLs
+            // { type: 'waveform-json', url: '/path/to/track1_ch1_waveform.json', details: { track: 1, channel: 1 } },
+            // { type: 'waveform-json', url: '/path/to/track1_ch2_waveform.json', details: { track: 1, channel: 2 } },
+            // { type: 'waveform-json', url: '/path/to/track2_ch1_waveform.json', details: { track: 2, channel: 1 } },
+            // { type: 'waveform-json', url: '/path/to/track2_ch2_waveform.json', details: { track: 2, channel: 2 } },
+        ];
+
+        const player = videojs('my-player', {
+            controls: true,
+            fluid: false,
+            width: 900,
+            height: 300,
+            plugins: {
+                wavesurferMultitrack: {
+                    tracks: TRACKS_A,
+                    channelHeight: 80,
+                    scrollFrom: 3,          // scroll after 3 visible channels
+                    displayMilliseconds: false,
+                    debug: true,
+                    progressColor: '#3573FF',
+                    waveColor: '#A4A9B7',
+                    cursorColor: '#fff',
+                    barWidth: 1,
+                    normalize: true,
+                    xhr: {
+                        credentials: 'same-origin',
+                    },
+                },
+            },
+        });
+
+        player.on('waveReady', function () {
+            console.log('[example] All waveforms ready');
+        });
+
+        player.on('tracksLoaded', function () {
+            console.log('[example] Tracks loaded event');
+        });
+
+        player.on('waveError', function (e, err) {
+            console.error('[example] Wave error', err);
+        });
+
+        // Demo: reload same tracks
+        document.getElementById('btn-load-tracks').addEventListener('click', function () {
+            player.wavesurferMultitrack().loadTracks(TRACKS_A);
+        });
+
+        // Demo: swap to empty (clears waveforms)
+        document.getElementById('btn-swap-tracks').addEventListener('click', function () {
+            player.wavesurferMultitrack().loadTracks([]);
+        });
+
+        // Demo: filter to a specific track
+        document.getElementById('btn-track1').addEventListener('click', function () {
+            player.wavesurferMultitrack().changeTrack(1);
+        });
+
+        document.getElementById('btn-track2').addEventListener('click', function () {
+            player.wavesurferMultitrack().changeTrack(2);
+        });
+
+        // Demo: clear track filter — show all
+        document.getElementById('btn-all-tracks').addEventListener('click', function () {
+            player.wavesurferMultitrack().changeTrack(null);
+        });
+    </script>
+</body>
+</html>

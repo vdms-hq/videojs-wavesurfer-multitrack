@@ -1,0 +1,62 @@
+{
+  "name": "@vdms-vida/videojs-wavesurfer-multitrack",
+  "version": "1.0.2",
+  "description": "video.js plugin that displays multiple stacked waveform channels using wavesurfer.js",
+  "author": "Lukasz Harkot",
+  "license": "MIT",
+  "main": "dist/videojs.wavesurfer.multitrack.js",
+  "style": "dist/css/videojs.wavesurfer.multitrack.css",
+  "types": "src/js/videojs.wavesurfer.multitrack.d.ts",
+  "files": [
+    "dist/",
+    "src/"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/vdms-vida/videojs-wavesurfer-multitrack.git"
+  },
+  "keywords": [
+    "waveform",
+    "audio",
+    "video",
+    "wavesurfer",
+    "videojs",
+    "videojs-plugin",
+    "multitrack",
+    "multichannel"
+  ],
+  "scripts": {
+    "clean": "rimraf dist",
+    "build": "npm run clean && npm run build:dev && npm run build:min",
+    "build:dev": "webpack --config ./build-config/webpack.dev.js",
+    "build:min": "webpack --config ./build-config/webpack.prod.js",
+    "start": "webpack serve --config ./build-config/webpack.dev.js",
+    "prepublishOnly": "npm run build"
+  },
+  "peerDependencies": {
+    "video.js": ">=7.0.0",
+    "wavesurfer.js": ">=6.3.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.26.0",
+    "@babel/preset-env": "^7.26.0",
+    "babel-loader": "^9.2.1",
+    "css-loader": "^7.1.2",
+    "css-minimizer-webpack-plugin": "^7.0.0",
+    "mini-css-extract-plugin": "^2.9.2",
+    "rimraf": "^6.0.1",
+    "sass": "^1.83.0",
+    "sass-loader": "^16.0.4",
+    "terser-webpack-plugin": "^5.5.0",
+    "video.js": "^8.0.0",
+    "wavesurfer.js": "^6.6.4",
+    "webpack": "^5.97.1",
+    "webpack-cli": "^5.1.4",
+    "webpack-dev-server": "^5.2.0",
+    "webpack-merge": "^6.0.1",
+    "webpack-remove-empty-scripts": "^1.1.1"
+  }
+}
