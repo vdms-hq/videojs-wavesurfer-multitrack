@@ -1,6 +1,6 @@
 {
   "name": "@vdms-vida/videojs-wavesurfer-multitrack",
-  "version": "1.0.3",
+  "version": "1.0.2",
   "description": "video.js plugin that displays multiple stacked waveform channels using wavesurfer.js",
   "author": "VDMS VIDA",
   "license": "MIT",
@@ -16,7 +16,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/vdms-vida/videojs-wavesurfer-multitrack.git"
+    "url": "https://github.com/vdms-hq/videojs-wavesurfer-multitrack.git"
   },
   "keywords": [
     "waveform",
