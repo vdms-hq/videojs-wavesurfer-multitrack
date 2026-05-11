@@ -36,7 +36,7 @@ jobs:
 
       - name: Bump patch version
         run: |
-          npm version patch -m "chore: bump version to %s [skip ci]"
+          npm version patch -m "chore: Bump version to %s [skip ci]"
 
       - name: Push commit and tags
         run: git push --follow-tags
