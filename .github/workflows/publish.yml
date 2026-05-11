@@ -55,13 +55,13 @@ jobs:
             echo "type=patch" >> $GITHUB_OUTPUT
           fi
 
-      - name: Bump version in package.json
-        run: |
-          npm version ${{ steps.bump.outputs.type }} -m "chore: bump version to %s [skip ci]"
+#      - name: Bump version in package.json
+#        run: |
+#          npm version ${{ steps.bump.outputs.type }} -m "chore: bump version to %s [skip ci]"
 
-      - name: Push commit and tag
-        run: |
-          git push --follow-tags
+#      - name: Push commit and tag
+#        run: |
+#          git push --follow-tags
 
       - name: Publish to npm (@vdms-vida)
         run: |
