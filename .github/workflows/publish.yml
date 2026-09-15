@@ -15,6 +15,7 @@ on:
 
 permissions:
   contents: write
+  id-token: write
 
 jobs:
   publish:
@@ -29,8 +30,11 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: '22'
           registry-url: 'https://registry.npmjs.org'
+
+      - name: Upgrade npm (trusted publishing requires npm >= 11.5.1)
+        run: npm install -g npm@11
 
       - name: Configure git
         run: |
@@ -61,8 +65,6 @@ jobs:
         run: |
           git push --follow-tags
 
-      - name: Publish to npm (@vdms-vida)
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - name: Publish to npm (@vdms-vida via OIDC trusted publisher)
         run: |
           npm publish --access public
